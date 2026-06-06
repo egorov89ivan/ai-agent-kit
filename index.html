@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Agent UI Kit — Figma Components for AI Products</title>
+  <meta name="description" content="Production-ready Figma components for chat interfaces, agent dashboards, and AI-powered products. 100+ components, Dark + Light themes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple: #7C3AED;
+      --purple-light: #8B5CF6;
+      --purple-dim: rgba(124, 58, 237, 0.15);
+      --bg: #0A0A0F;
+      --bg2: #0F0F1A;
+      --glass: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.08);
+      --text: #F8F8FF;
+      --text-muted: rgba(248,248,255,0.55);
+      --radius: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NOISE TEXTURE */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* GLOW BLOBS */
+    .glow {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-1 { width: 600px; height: 600px; background: rgba(124,58,237,0.12); top: -200px; left: -100px; }
+    .glow-2 { width: 400px; height: 400px; background: rgba(139,92,246,0.08); bottom: 20%; right: -100px; }
+
+    /* LAYOUT */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+    section { padding: 96px 0; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 24px;
+      background: rgba(10,10,15,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-weight: 700; font-size: 15px; letter-spacing: -0.3px; }
+    .nav-logo span { color: var(--purple-light); }
+    .nav-cta {
+      background: var(--purple);
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--purple-light); }
+
+    /* HERO */
+    #hero {
+      padding-top: 160px;
+      padding-bottom: 96px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--purple-dim);
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--purple-light);
+      margin-bottom: 32px;
+    }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--purple-light); border-radius: 50%; }
+    h1 {
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+    h1 .accent { color: var(--purple-light); }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 16px;
+    }
+    .hero-sub-ru {
+      font-size: 15px;
+      color: rgba(248,248,255,0.35);
+      max-width: 520px;
+      margin: 0 auto 48px;
+    }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 40px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 28px; font-weight: 700; color: var(--text); }
+    .stat-label { font-size: 13px; color: var(--text-muted); }
+    .hero-btns {
+      display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--purple);
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: var(--purple-light); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(124,58,237,0.4); }
+    .btn-secondary {
+      background: var(--glass);
+      color: var(--text);
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      border: 1px solid var(--glass-border);
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.08); }
+
+    /* SECTION TITLES */
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-desc { font-size: 17px; color: var(--text-muted); max-width: 500px; }
+
+    /* SCREENSHOTS */
+    #screenshots { background: var(--bg2); }
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .screenshot-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .screenshot-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+    .screenshot-card img { width: 100%; display: block; }
+    .screenshot-label {
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-top: 1px solid var(--glass-border);
+    }
+
+    /* WHAT'S INSIDE */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .feature-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .feature-card:hover {
+      border-color: rgba(124,58,237,0.4);
+      background: rgba(124,58,237,0.06);
+    }
+    .feature-icon {
+      width: 40px; height: 40px;
+      background: var(--purple-dim);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .feature-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .feature-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* COMPARISON */
+    #comparison { background: var(--bg2); }
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 48px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+    }
+    .comparison-table th {
+      padding: 20px 24px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 600;
+      background: var(--glass);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .comparison-table th:nth-child(2) { color: var(--text-muted); text-align: center; }
+    .comparison-table th:nth-child(3) { color: var(--purple-light); text-align: center; }
+    .comparison-table td {
+      padding: 16px 24px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .comparison-table tr:last-child td { border-bottom: none; }
+    .comparison-table td:nth-child(2),
+    .comparison-table td:nth-child(3) { text-align: center; }
+    .comparison-table tr:hover td { background: var(--glass); }
+    .check { color: #34D399; font-size: 18px; }
+    .cross { color: rgba(255,255,255,0.2); font-size: 18px; }
+    .col-paid { background: rgba(124,58,237,0.05); }
+
+    /* FINAL CTA */
+    #cta { text-align: center; }
+    .cta-box {
+      background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(139,92,246,0.08));
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 24px;
+      padding: 72px 40px;
+    }
+    .cta-price {
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin: 24px 0 8px;
+    }
+    .cta-price-note { font-size: 14px; color: var(--text-muted); margin-bottom: 40px; }
+
+    /* FOOTER */
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--glass-border);
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      position: relative; z-index: 1;
+    }
+    footer a { color: var(--purple-light); text-decoration: none; }
+
+    /* COOKIE BANNER */
+    #cookie-banner {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 48px);
+      max-width: 600px;
+      background: rgba(15,15,26,0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 9999;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    #cookie-banner.hidden { display: none; }
+    #cookie-accept {
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    #cookie-accept:hover { background: var(--purple-light); }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      section { padding: 64px 0; }
+      #hero { padding-top: 120px; }
+      .screenshots-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+      .comparison-table { font-size: 13px; }
+      .comparison-table th, .comparison-table td { padding: 12px 16px; }
+      .cta-box { padding: 48px 24px; }
+      #cookie-banner { flex-direction: column; text-align: center; bottom: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">AI Agent <span>UI Kit</span></div>
+    <a href="https://t.me/aiagent_uikit_bot" target="_blank" rel="noopener" class="nav-cta">Buy $29</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-badge">Figma UI Kit · v1.0 · 2026</div>
+    <h1>Figma components for<br><span class="accent">AI-powered products</span></h1>
+    <p class="hero-sub">Chat interfaces, agent workflows, tool calls, reasoning steps — production-ready and drop-in ready.</p>
+    <p class="hero-sub-ru">Figma-компоненты для AI-продуктов. Бери и используй.</p>
+
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">100+</div><div class="stat-label">Components</div></div>
+      <div class="stat"><div class="stat-num">7</div><div class="stat-label">Section pages</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Color themes</div></div>
+      <div class="stat"><div class="stat-num">$29</div><div class="stat-label">Full version</div></div>
+    </div>
+
+    <div class="hero-btns">
+      <a href="https://t.me/aiagent_uikit_bot" target="_blank" rel="noopener" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Buy Full Version — $29
+      </a>
+      <a href="https://www.figma.com/community/file/1644825120881335966" target="_blank" rel="noopener" class="btn-secondary">
+        Free Preview ↗
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENSHOTS -->
+<section id="screenshots">
+  <div class="container">
+    <div class="section-label">Preview</div>
+    <h2>See what's inside</h2>
+    <p class="section-desc">Every component built for real AI product scenarios — not generic UI.</p>
+
+    <div class="screenshots-grid">
+      <div class="screenshot-card">
+        <img src="images/01-cover.png" alt="AI Agent UI Kit — Overview" loading="lazy" />
+        <div class="screenshot-label">Overview — 100+ components across 7 sections</div>
+      </div>
+      <div class="screenshot-card">
+        <img src="images/02-chat-components.png" alt="Chat Components" loading="lazy" />
+        <div class="screenshot-label">Chat — input, bubbles, streaming, suggestion chips</div>
+      </div>
+      <div class="screenshot-card">
+        <img src="images/03-agent-patterns.png" alt="Agent Patterns" loading="lazy" />
+        <div class="screenshot-label">Agent Patterns — tool calls, reasoning, plan & confirm</div>
+      </div>
+      <div class="screenshot-card">
+        <img src="images/04-navigation.png" alt="Navigation" loading="lazy" />
+        <div class="screenshot-label">Navigation — sidebar, header, full app layout</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section id="features">
+  <div class="container">
+    <div class="section-label">Contents / Состав</div>
+    <h2>Everything you need to ship<br>an AI product</h2>
+    <p class="section-desc">7 sections, Auto Layout throughout, Inter font, Dark + Light themes.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <div class="feature-title">Color Tokens</div>
+        <div class="feature-desc">25+ semantic variables for Dark & Light themes. Ready to plug into any project.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <div class="feature-title">Chat Components</div>
+        <div class="feature-desc">Input field, user & AI message bubbles, streaming state, suggestion chips.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-title">Agent Patterns</div>
+        <div class="feature-desc">Tool calls (3 states), reasoning steps, plan & confirm flow, citation cards.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧭</div>
+        <div class="feature-title">Navigation</div>
+        <div class="feature-desc">Sidebar, header, and full app layout shell — drop into any AI app.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">States</div>
+        <div class="feature-desc">Empty, loading, error, and success states for every AI context.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🃏</div>
+        <div class="feature-title">Agents & Onboarding</div>
+        <div class="feature-desc">Agent cards, selection screen, welcome flow — full onboarding sequence.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <div class="feature-title">Notifications</div>
+        <div class="feature-desc">Toast messages, ⌘K command palette, inline suggestion bar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE VS FULL -->
+<section id="comparison">
+  <div class="container">
+    <div class="section-label">Pricing / Цены</div>
+    <h2>Free Preview vs Full Version</h2>
+    <p class="section-desc">Start free — upgrade when you're ready to ship.</p>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Free Preview</th>
+          <th>Full Version — $29</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Color Tokens (Dark & Light)</td><td><span class="check">✓</span></td><td class="col-paid"><span class="check">✓</span></td></tr>
+        <tr><td>Chat Input (2 states)</td><td><span class="check">✓</span></td><td class="col-paid"><span class="check">✓</span></td></tr>
+        <tr><td>User Message Bubble</td><td><span class="check">✓</span></td><td class="col-paid"><span class="check">✓</span></td></tr>
+        <tr><td>AI Message Bubble + Streaming</td><td><span class="cross">—</span></td><td class="col-paid"><span class="check">✓</span></td></tr>
+        <tr><td>Suggestion Chips</td><td><span class="cross">—</span></td><td class="col-paid"><span class="check">✓</span></td></tr>
+        <tr><td>Agent Patterns (tool calls, reasoning)</td><td><span class="cross">—</span></td><td class="col-paid"><span class="check">✓</span></td></tr>
+        <tr><td>Navigation (sidebar + header + layout)</td><td><span class="cross">—</span></td><td class="col-paid"><span class="check">✓</span></td></tr>
+        <tr><td>States (empty, loading, error, success)</td><td><span class="cross">—</span></td><td class="col-paid"><span class="check">✓</span></td></tr>
+        <tr><td>Agents & Onboarding</td><td><span class="cross">—</span></td><td class="col-paid"><span class="check">✓</span></td></tr>
+        <tr><td>Notifications & ⌘K palette</td><td><span class="cross">—</span></td><td class="col-paid"><span class="check">✓</span></td></tr>
+        <tr><td>Future updates</td><td><span class="cross">—</span></td><td class="col-paid"><span class="check">✓</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="cta-box">
+      <div class="section-label">Get it now / Купить</div>
+      <h2>Start designing AI products<br>today</h2>
+      <p style="color: var(--text-muted); font-size: 16px; margin-top: 12px;">
+        Начни проектировать AI-продукты уже сегодня
+      </p>
+      <div class="cta-price">$29</div>
+      <p class="cta-price-note">One-time payment · Figma file · Instant access</p>
+      <div class="hero-btns">
+        <a href="https://t.me/aiagent_uikit_bot" target="_blank" rel="noopener" class="btn-primary">
+          Buy Full Version via Telegram
+        </a>
+        <a href="https://www.figma.com/community/file/1644825120881335966" target="_blank" rel="noopener" class="btn-secondary">
+          Try Free Preview
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>© 2026 AI Agent UI Kit · <a href="https://t.me/aiagent_uikit_bot" target="_blank" rel="noopener">@aiagent_uikit_bot</a> · <a href="https://www.figma.com/community/file/1644825120881335966" target="_blank" rel="noopener">Figma Community</a></p>
+  </div>
+</footer>
+
+<!-- COOKIE BANNER -->
+<div id="cookie-banner">
+  <span>We use cookies to improve your experience. / Мы используем cookies.</span>
+  <button id="cookie-accept">Accept / Принять</button>
+</div>
+
+<script>
+  // Cookie banner
+  if (localStorage.getItem('cookie-accepted')) {
+    document.getElementById('cookie-banner').classList.add('hidden');
+  }
+  document.getElementById('cookie-accept').addEventListener('click', function() {
+    localStorage.setItem('cookie-accepted', '1');
+    document.getElementById('cookie-banner').classList.add('hidden');
+  });
+</script>
+
+</body>
+</html>
