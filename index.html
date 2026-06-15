@@ -112,6 +112,15 @@
       margin-bottom: 24px;
     }
     h1 .accent { color: var(--purple-light); }
+    .hero-tagline {
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+      max-width: 720px;
+      margin: 0 auto 28px;
+    }
+    .hero-tagline .accent { color: var(--purple-light); }
     .hero-sub {
       font-size: clamp(16px, 2vw, 20px);
       color: var(--text-muted);
@@ -160,6 +169,96 @@
     }
     .btn-secondary:hover { background: rgba(255,255,255,0.08); }
 
+    /* PRODUCT HUNT BADGE */
+    .ph-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 36px;
+      padding: 10px 18px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .ph-badge:hover { border-color: rgba(218,85,53,0.5); background: rgba(218,85,53,0.06); }
+    .ph-badge-logo {
+      width: 28px; height: 28px;
+      background: #DA552F;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 14px; color: #fff;
+      flex-shrink: 0;
+    }
+    .ph-badge-text { text-align: left; line-height: 1.25; }
+    .ph-badge-top { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+    .ph-badge-main { font-size: 14px; font-weight: 600; color: var(--text); }
+
+    /* WHAT OTHERS DON'T HAVE */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .diff-card {
+      background: linear-gradient(160deg, rgba(124,58,237,0.10), rgba(124,58,237,0.02));
+      border: 1px solid rgba(124,58,237,0.25);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .diff-card:hover { transform: translateY(-4px); border-color: rgba(124,58,237,0.6); }
+    .diff-icon {
+      width: 44px; height: 44px;
+      background: var(--purple);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+    .diff-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .diff-desc { font-size: 14px; color: var(--text-muted); line-height: 1.55; }
+    .diff-tags { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .diff-tag {
+      font-size: 11px; font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: var(--purple-dim);
+      color: var(--purple-light);
+    }
+
+    /* GENERIC VS THIS */
+    .vs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .vs-col {
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      border: 1px solid var(--glass-border);
+    }
+    .vs-col.generic { background: var(--glass); }
+    .vs-col.ours { background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.4); }
+    .vs-col-head { font-size: 15px; font-weight: 700; margin-bottom: 18px; }
+    .vs-col.generic .vs-col-head { color: var(--text-muted); }
+    .vs-col.ours .vs-col-head { color: var(--purple-light); }
+    .vs-list { list-style: none; }
+    .vs-list li {
+      font-size: 14px; line-height: 1.5;
+      padding: 8px 0 8px 26px;
+      position: relative;
+      color: var(--text-muted);
+    }
+    .vs-col.ours .vs-list li { color: var(--text); }
+    .vs-list li::before {
+      position: absolute; left: 0; top: 8px;
+      font-size: 14px; font-weight: 700;
+    }
+    .vs-col.generic .vs-list li::before { content: '✕'; color: rgba(255,255,255,0.25); }
+    .vs-col.ours .vs-list li::before { content: '✓'; color: #34D399; }
+
     /* SECTION TITLES */
     .section-label {
       font-size: 12px;
@@ -204,6 +303,7 @@
     }
 
     /* WHAT'S INSIDE */
+    #features { background: var(--bg2); }
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -233,7 +333,6 @@
     .feature-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
 
     /* COMPARISON */
-    #comparison { background: var(--bg2); }
     .comparison-table {
       width: 100%;
       border-collapse: collapse;
@@ -337,6 +436,7 @@
       .comparison-table { font-size: 13px; }
       .comparison-table th, .comparison-table td { padding: 12px 16px; }
       .cta-box { padding: 48px 24px; }
+      .vs-grid { grid-template-columns: 1fr; }
       #cookie-banner { flex-direction: column; text-align: center; bottom: 16px; }
     }
   </style>
@@ -359,8 +459,9 @@
   <div class="container">
     <div class="hero-badge">Figma UI Kit · v1.0 · 2026</div>
     <h1>Figma components for<br><span class="accent">AI-powered products</span></h1>
+    <p class="hero-tagline">Other kits hand you bricks.<br>This one hands you the <span class="accent">architecture</span> for an AI product.</p>
     <p class="hero-sub">Chat interfaces, agent workflows, tool calls, reasoning steps — production-ready and drop-in ready.</p>
-    <p class="hero-sub-ru">Figma-компоненты для AI-продуктов. Бери и используй.</p>
+    <p class="hero-sub-ru">Built in Figma. Plug into your project and ship.</p>
 
     <div class="hero-stats">
       <div class="stat"><div class="stat-num">100+</div><div class="stat-label">Components</div></div>
@@ -376,6 +477,16 @@
       </a>
       <a href="https://www.figma.com/community/file/1644825120881335966" target="_blank" rel="noopener" class="btn-secondary">
         Free Preview ↗
+      </a>
+    </div>
+
+    <div>
+      <a href="https://www.producthunt.com/products/ai-agent-ui-kit?launch=ai-agent-ui-kit" target="_blank" rel="noopener" class="ph-badge">
+        <span class="ph-badge-logo">P</span>
+        <span class="ph-badge-text">
+          <span class="ph-badge-top">Featured on</span>
+          <span class="ph-badge-main">Product Hunt</span>
+        </span>
       </a>
     </div>
   </div>
@@ -409,10 +520,84 @@
   </div>
 </section>
 
+<!-- WHAT OTHERS DON'T HAVE -->
+<section id="diff">
+  <div class="container">
+    <div class="section-label">The difference</div>
+    <h2>What generic UI kits<br>don't give you</h2>
+    <p class="section-desc">AI products break standard components. These patterns are built for how AI actually behaves.</p>
+
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="diff-icon">🛠️</div>
+        <div class="diff-title">Tool Calls</div>
+        <div class="diff-desc">The moment an agent reaches for a tool — captured as a real component, not an afterthought.</div>
+        <div class="diff-tags">
+          <span class="diff-tag">In progress</span>
+          <span class="diff-tag">Success</span>
+          <span class="diff-tag">Error</span>
+        </div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">⌨️</div>
+        <div class="diff-title">Streaming</div>
+        <div class="diff-desc">Token-by-token responses are how AI talks. Built as a dedicated streaming component, ready to animate.</div>
+        <div class="diff-tags">
+          <span class="diff-tag">Live typing</span>
+          <span class="diff-tag">Cursor state</span>
+        </div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">✅</div>
+        <div class="diff-title">Plan & Confirm</div>
+        <div class="diff-desc">Before the agent acts, the user approves. The full plan-and-confirm flow other kits simply don't have.</div>
+        <div class="diff-tags">
+          <span class="diff-tag">Action approval</span>
+          <span class="diff-tag">Step list</span>
+        </div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🧠</div>
+        <div class="diff-title">Reasoning Steps</div>
+        <div class="diff-desc">Show the model thinking out loud — collapsible reasoning chains that make AI feel transparent.</div>
+        <div class="diff-tags">
+          <span class="diff-tag">Chain of thought</span>
+          <span class="diff-tag">Collapsible</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="vs-grid">
+      <div class="vs-col generic">
+        <div class="vs-col-head">Generic chat UI kit</div>
+        <ul class="vs-list">
+          <li>Static message bubbles</li>
+          <li>No tool-call states</li>
+          <li>No streaming component</li>
+          <li>No agent reasoning UI</li>
+          <li>No plan & confirm flow</li>
+          <li>You build AI patterns yourself</li>
+        </ul>
+      </div>
+      <div class="vs-col ours">
+        <div class="vs-col-head">AI Agent UI Kit</div>
+        <ul class="vs-list">
+          <li>Streaming &amp; live-typing bubbles</li>
+          <li>Tool calls in 3 states</li>
+          <li>Reasoning &amp; chain-of-thought UI</li>
+          <li>Plan &amp; confirm approval flow</li>
+          <li>Citations, agent cards, ⌘K palette</li>
+          <li>Ship the AI parts on day one</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- WHAT'S INSIDE -->
 <section id="features">
   <div class="container">
-    <div class="section-label">Contents / Состав</div>
+    <div class="section-label">Contents</div>
     <h2>Everything you need to ship<br>an AI product</h2>
     <p class="section-desc">7 sections, Auto Layout throughout, Inter font, Dark + Light themes.</p>
 
@@ -459,7 +644,7 @@
 <!-- FREE VS FULL -->
 <section id="comparison">
   <div class="container">
-    <div class="section-label">Pricing / Цены</div>
+    <div class="section-label">Pricing</div>
     <h2>Free Preview vs Full Version</h2>
     <p class="section-desc">Start free — upgrade when you're ready to ship.</p>
 
@@ -492,10 +677,10 @@
 <section id="cta">
   <div class="container">
     <div class="cta-box">
-      <div class="section-label">Get it now / Купить</div>
+      <div class="section-label">Get it now</div>
       <h2>Start designing AI products<br>today</h2>
       <p style="color: var(--text-muted); font-size: 16px; margin-top: 12px;">
-        Начни проектировать AI-продукты уже сегодня
+        One file. Every AI pattern you need. Ready to ship.
       </p>
       <div class="cta-price">$49</div>
       <p class="cta-price-note">One-time payment · Figma file · Instant access</p>
@@ -521,8 +706,8 @@
 
 <!-- COOKIE BANNER -->
 <div id="cookie-banner">
-  <span>We use cookies to improve your experience. / Мы используем cookies.</span>
-  <button id="cookie-accept">Accept / Принять</button>
+  <span>We use cookies to improve your experience.</span>
+  <button id="cookie-accept">Accept</button>
 </div>
 
 <script>
